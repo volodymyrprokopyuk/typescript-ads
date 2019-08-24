@@ -1,0 +1,17 @@
+{
+    "name": "typescript-ads",
+    "version": "0.1.0",
+    "description": "Algorithms and data structures in TypeScript",
+    "main": "index.js",
+    "repository": "https://github.com/volodymyrprokopyuk/typescript-ads",
+    "author": "Volodymyr Prokopyuk <volodymyrprokopyuk@gmail.com>",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "prettier": "1.18.2",
+        "tslint": "5.19.0",
+        "typescript": "3.5.3",
+        "jest": "24.9.0",
+        "@types/jest": "24.0.18"
+    }
+}
