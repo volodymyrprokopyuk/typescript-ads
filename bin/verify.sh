@@ -26,6 +26,7 @@ function compile {
     local target=${1?ERROR: mandatory target is not provided}
 
     tsc --target es2019 --module commonjs \
+        --incremental --tsBuildInfoFile .tsbuildinfo \
         --strictNullChecks --noImplicitAny --experimentalDecorators \
         $target
 }
