@@ -1,4 +1,4 @@
-import {IArray, CArray} from "./array";
+import {CArray} from "./array";
 
 describe("CArray implements the IArray interface", () => {
     describe("CArray.from(iterable) creates a CArray from an iterable", () => {
