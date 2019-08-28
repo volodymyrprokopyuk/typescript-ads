@@ -40,6 +40,20 @@ describe("CArray implements the IArray interface", () => {
             expect(result.values).toEqual(array);
         });
     });
+    describe("CArray.concat(iterable) creates a new CArray from the existing CArray and an iterable", () => {
+        describe.each([
+            [[], [], []],
+            [[1], [2], [1, 2]],
+            [[1, 2], [3, 4], [1, 2, 3, 4]],
+        ])("%p.concat(%p) should be %p", (array, iterable, expectedResult) => {
+            it("Should create a new CArray when concatenating with an iterable", () => {
+                const result = new CArray(array);
+                const newResult = result.concat(iterable);
+                expect(newResult.values).toEqual(expectedResult);
+                expect(newResult.length).toEqual(expectedResult.length);
+            });
+        });
+    });
     // Observation
     describe("CArray.length is the read-only length of a CArray", () => {
         it("Should be the length of a CArray when a CArray is created", () => {

@@ -2,6 +2,8 @@ export interface IArray<T> extends /* Traversal */ Iterable<T> {
     // Observation
     readonly length: number;
     readonly values: T[];
+    // Creation
+    concat(iterable: Iterable<T>): IArray<T>;
     // Insertion
     insert(position: number, element: T): void;
     push(element: T): void;
@@ -35,6 +37,15 @@ export class CArray<T> implements IArray<T> {
     constructor(array?: T[]) {
         // Make a cope of the source array
         this.array = array === undefined ? [] : array.slice();
+    }
+
+    // Create a new CArray from the existing CArray and an iterable
+    concat(iterable: Iterable<T>): IArray<T> {
+        const newArray = new CArray(this.array);
+        for (const element of iterable) {
+            newArray.push(element);
+        }
+        return newArray;
     }
 
     // Observation
