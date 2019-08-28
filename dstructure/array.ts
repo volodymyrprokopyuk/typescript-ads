@@ -1,14 +1,19 @@
-export interface IArray<T> extends Iterable<T> {
+export interface IArray<T> extends /* Traversal */ Iterable<T> {
+    // Observation
     readonly length: number;
     readonly values: T[];
-    insert(element: T): void;
+    // Insertion
+    insert(position: number, element: T): void;
+    push(element: T): void;
+    unshift(element: T): void;
 }
 
 export class CArray<T> implements IArray<T> {
+    // Creation
     static from(iterable: any) {
         const array = new CArray();
         for (const element of iterable) {
-            array.insert(element);
+            array.push(element);
         }
         return array;
     }
@@ -16,7 +21,7 @@ export class CArray<T> implements IArray<T> {
     static of(...values: any[]) {
         const array = new CArray();
         for (const element of values) {
-            array.insert(element);
+            array.push(element);
         }
         return array;
     }
@@ -27,6 +32,7 @@ export class CArray<T> implements IArray<T> {
         this.array = array === undefined ? [] : array.slice();
     }
 
+    // Observation
     get length(): number {
         return this.array.length;
     }
@@ -36,8 +42,24 @@ export class CArray<T> implements IArray<T> {
     }
 
     // Insertion
-    insert(element: T): void {
-        this.array[this.array.length] = element;
+    insert(position: number, element: T): void {
+        if (position < 0 || position > this.array.length) {
+            throw new RangeError("Index out of bounds");
+        }
+        let index = this.array.length;
+        while (index > position) {
+            this.array[index] = this.array[index - 1];
+            --index;
+        }
+        this.array[position] = element;
+    }
+
+    push(element: T): void {
+        this.insert(this.array.length, element);
+    }
+
+    unshift(element: T): void {
+        this.insert(0, element);
     }
 
     // Traversal
