@@ -1,47 +1,18 @@
-export interface IArray<T> extends /* Traversal */ Iterable<T> {
-    // Observation
-    readonly length: number;
-    readonly values: T[];
-    // Creation
-    concat(iterable: Iterable<T>): IArray<T>;
-    // Insertion
-    insert(position: number, element: T): void;
-    push(element: T): void;
-    unshift(element: T): void;
-    // Deletion
-    delete(position: number): T;
-    pop(): T;
-    shift(): T;
-}
+export class CArray<T> /* Traversal */ implements Iterable<T> {
+    private array: T[] = [];
 
-export class CArray<T> implements IArray<T> {
-    // Creation
-    static from(iterable: any) {
-        const array = new CArray();
-        for (const element of iterable) {
-            array.push(element);
+    // Creation from an optional iterable
+    constructor(iterable?: any) {
+        if (iterable !== undefined) {
+            for (const element of iterable) {
+                this.array.push(element);
+            }
         }
-        return array;
-    }
-
-    static of(...values: any[]) {
-        const array = new CArray();
-        for (const element of values) {
-            array.push(element);
-        }
-        return array;
-    }
-
-    private array: T[];
-
-    constructor(array?: T[]) {
-        // Make a cope of the source array
-        this.array = array === undefined ? [] : array.slice();
     }
 
     // Create a new CArray from the existing CArray and an iterable
-    concat(iterable: Iterable<T>): IArray<T> {
-        const newArray = new CArray(this.array);
+    concat(iterable: Iterable<T>): CArray<T> {
+        const newArray = new CArray<T>(this.array);
         for (const element of iterable) {
             newArray.push(element);
         }

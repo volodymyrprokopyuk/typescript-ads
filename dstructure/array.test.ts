@@ -1,35 +1,13 @@
 import {CArray} from "./array";
 
-describe("CArray implements the IArray interface", () => {
+describe("CArray implements the array linear data structure", () => {
     // Creation
-    describe("CArray.from(iterable) creates a CArray from an iterable", () => {
+    describe("new CArray(iterable?) creates a CArray empty or from an iterable", () => {
         it("Should throw a TypeError when a non-iterble is provided", () => {
-            expect(() => CArray.from(0)).toThrow(
+            expect(() => new CArray(0)).toThrow(
                 new TypeError("iterable is not iterable")
             );
         });
-        describe.each([[[], []], [[1], [1]], [[1, 2], [1, 2]]])(
-            "CArray.from(%p) should be %p",
-            (iterable, expectedResult) => {
-                it("Should create a CArray from an iterable", () => {
-                    const result = CArray.from(iterable);
-                    expect(result.values).toEqual(iterable);
-                });
-            }
-        );
-    });
-    describe("CArray.of(...parameters) creates a CArray from parameters", () => {
-        describe.each([[[], []], [[1], [1]], [[1, 2], [1, 2]]])(
-            "CArray.of(%p) should be %p",
-            (parameters, expectedResult) => {
-                it("Should create a CArray from parameters", () => {
-                    const result = CArray.of(...parameters);
-                    expect(result.values).toEqual(parameters);
-                });
-            }
-        );
-    });
-    describe("new CArray(array?) creates a CArray empty or from an array", () => {
         it("Should create an empty CArray when the array is not provided", () => {
             const result = new CArray();
             expect(result.values).toEqual([]);
@@ -49,6 +27,8 @@ describe("CArray implements the IArray interface", () => {
             it("Should create a new CArray when concatenating with an iterable", () => {
                 const result = new CArray(array);
                 const newResult = result.concat(iterable);
+                expect(result.values).toEqual(array);
+                expect(result.length).toEqual(array.length);
                 expect(newResult.values).toEqual(expectedResult);
                 expect(newResult.length).toEqual(expectedResult.length);
             });

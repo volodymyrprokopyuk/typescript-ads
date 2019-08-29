@@ -9,7 +9,8 @@
         "ordered-imports": false,
         "interface-name": false,
         "member-access": false,
-        "trailing-comma": false
+        "trailing-comma": false,
+        "max-classes-per-file": false
     },
     "rulesDirectory": []
 }

@@ -3,8 +3,9 @@
 set -eux
 
 export PATH=./node_modules/.bin:$PATH
-readonly SOURCE_TARGET=$(ls dstructure/*.ts | grep -v '.test.')
-readonly TEST_TARGET=dstructure/*.test.ts
+readonly TARGET=
+readonly SOURCE_TARGET=$(ls dstructure/*.ts | grep -v '.test.' | grep "${TARGET}")
+readonly TEST_TARGET=$(ls dstructure/*.test.ts | grep "${TARGET}")
 
 function format {
     local target=${1?ERROR: mandatory target is not provided}
@@ -34,14 +35,14 @@ function compile {
 function verify {
     local target=${1?ERROR: mandatory target is not provided}
 
-    jest ${target%%.ts}.js
+    jest ${target//.ts/.js}
 }
 
-format $SOURCE_TARGET
-validate $SOURCE_TARGET
-compile $SOURCE_TARGET
+format "${SOURCE_TARGET}"
+validate "${SOURCE_TARGET}"
+compile "${SOURCE_TARGET}"
 
-format $TEST_TARGET
-validate $TEST_TARGET
-compile $TEST_TARGET
-verify $TEST_TARGET
+format "${TEST_TARGET}"
+validate "${TEST_TARGET}"
+compile "${TEST_TARGET}"
+verify "${TEST_TARGET}"
