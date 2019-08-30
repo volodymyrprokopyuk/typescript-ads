@@ -8,11 +8,11 @@ describe("CArray implements the array linear data structure", () => {
                 new TypeError("iterable is not iterable")
             );
         });
-        it("Should create an empty CArray when the array is not provided", () => {
+        it("Should create an empty CArray when the iterble is not provided", () => {
             const result = new CArray();
             expect(result.values).toEqual([]);
         });
-        it("Should create a CArray from an array", () => {
+        it("Should create a CArray from an iterable", () => {
             const array = [1, 2];
             const result = new CArray(array);
             expect(result.values).toEqual(array);
@@ -82,11 +82,11 @@ describe("CArray implements the array linear data structure", () => {
             }
         );
     });
-    describe("CArray.push(element) inserts an element at the end of the CArray", () => {
+    describe("CArray.push(element) inserts an element at the end of a CArray", () => {
         describe.each([[[], 10, [10]], [[1], 10, [1, 10]]])(
             "%p.push(%p) should be %p",
             (array: any, element, expectedResult) => {
-                it("Should insert an element at the end of the CArray", () => {
+                it("Should insert an element at the end of a CArray", () => {
                     const result = new CArray(array);
                     result.push(element);
                     expect(result.values).toEqual(expectedResult);
@@ -94,11 +94,11 @@ describe("CArray implements the array linear data structure", () => {
             }
         );
     });
-    describe("CArray.unshift(element) inserts an element at the beginning of the CArray", () => {
+    describe("CArray.unshift(element) inserts an element at the beginning of a CArray", () => {
         describe.each([[[], 10, [10]], [[1], 10, [10, 1]]])(
             "%p.unshift(%p) should be %p",
             (array: any, element, expectedResult) => {
-                it("Should insert an element at the beginning of the CArray", () => {
+                it("Should insert an element at the beginning of a CArray", () => {
                     const result = new CArray(array);
                     result.unshift(element);
                     expect(result.values).toEqual(expectedResult);
@@ -166,7 +166,7 @@ describe("CArray implements the array linear data structure", () => {
         );
     });
     // Traversal
-    describe("CArray supports the for/of traversal via the [Symbol.iterator]()", () => {
+    describe("CArray supports the for/of traversal via a [Symbol.iterator]()", () => {
         describe.each([[[], []], [[1], [1]], [[1, 2], [1, 2]]])(
             "for (element of %p) should be %p",
             (array, expectedResult) => {
