@@ -51,31 +51,31 @@ describe("CArray implements the array linear data structure", () => {
         });
     });
     // Insertion
-    describe("CArray.insert(position, element) inserts an element at a position", () => {
-        describe.each([[[], -1, 10], [[], 1, 10]])(
+    describe("CArray.insert(element, position) inserts an element at a position", () => {
+        describe.each([[[], 10, -1], [[], 10, 1]])(
             "%p.insert(%p, %p) should throw a RangeError",
-            (array: any, position: any, element) => {
+            (array: any, element, position: any) => {
                 it("Should throw a RangeError when inserting before [0] or after [length]", () => {
                     const result = new CArray(array);
-                    expect(() => result.insert(position, element)).toThrow(
+                    expect(() => result.insert(element, position)).toThrow(
                         new RangeError("Index out of bounds")
                     );
                 });
             }
         );
         describe.each([
-            [[], 0, 10, [10]],
-            [[1], 0, 10, [10, 1]],
-            [[1], 1, 10, [1, 10]],
-            [[1, 2], 0, 10, [10, 1, 2]],
-            [[1, 2], 1, 10, [1, 10, 2]],
-            [[1, 2], 2, 10, [1, 2, 10]],
+            [[], 10, 0, [10]],
+            [[1], 10, 0, [10, 1]],
+            [[1], 10, 1, [1, 10]],
+            [[1, 2], 10, 0, [10, 1, 2]],
+            [[1, 2], 10, 1, [1, 10, 2]],
+            [[1, 2], 10, 2, [1, 2, 10]],
         ])(
             "%p.insertAt(%p, %p) should be %p",
-            (array: any, position: any, element, expectedResult: any) => {
+            (array: any, element, position: any, expectedResult: any) => {
                 it("Should insert an element at a position when a position is within the bounds", () => {
                     const result = new CArray(array);
-                    result.insert(position, element);
+                    result.insert(element, position);
                     expect(result.values).toEqual(expectedResult);
                     expect(result.length).toBe(expectedResult.length);
                 });

@@ -30,7 +30,7 @@ export class CArray<T> /* Traversal */ implements Iterable<T> {
     }
 
     // Insertion
-    insert(position: number, element: T): void {
+    insert(element: T, position: number): void {
         // Insertion before [0] or after [length] is forbidden
         if (position < 0 || position > this.array.length) {
             throw new RangeError("Index out of bounds");
@@ -48,12 +48,12 @@ export class CArray<T> /* Traversal */ implements Iterable<T> {
 
     // Insert at the end of the array
     push(element: T): void {
-        this.insert(this.array.length, element);
+        this.insert(element, this.array.length);
     }
 
     // Insert at the beginning of the array
     unshift(element: T): void {
-        this.insert(0, element);
+        this.insert(element, 0);
     }
 
     // Deletion
