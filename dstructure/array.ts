@@ -1,96 +1,115 @@
-export class CArray<T> /* Traversal */ implements Iterable<T> {
+// Dynamic array
+export class DArray<T> implements Iterable<T> {
     private array: T[] = [];
 
-    // Creation from an optional iterable
+    /* Creation */
+
+    // O(n)
     constructor(iterable?: any) {
         if (iterable !== undefined) {
-            for (const element of iterable) {
-                this.array.push(element);
+            for (const value of iterable) {
+                this.array.push(value);
             }
         }
     }
 
-    // Create a new CArray from the existing CArray and an iterable
-    concat(iterable: Iterable<T>): CArray<T> {
-        const newArray = new CArray<T>(this.array);
-        for (const element of iterable) {
-            newArray.push(element);
+    // O(n)
+    concat(iterable: Iterable<T>): DArray<T> {
+        const newArray = new DArray<T>(this.array);
+        for (const value of iterable) {
+            newArray.push(value);
         }
         return newArray;
     }
 
-    // Observation
+    /* Observation */
+
+    // O(1)
     get length(): number {
         return this.array.length;
     }
 
+    // O(1)
     get values(): T[] {
-        // Make a cope of the internal array
         return this.array.slice();
     }
 
-    // Insertion
-    insert(element: T, position: number): void {
-        // Insertion before [0] or after [length] is forbidden
-        if (position < 0 || position > this.array.length) {
+    /* Indexing */
+
+    // O(1)
+    at(index: number): T {
+        if (index < 0 || index >= this.length) {
             throw new RangeError("Index out of bounds");
         }
-        // Move one posiiton to the right all the elements starting from the end of the
-        // array till the position inclusive to make room for the new element
-        let index = this.array.length;
-        while (index > position) {
-            this.array[index] = this.array[index - 1];
-            --index;
-        }
-        // Set the new element at the posiiton
-        this.array[position] = element;
+        const value = this.array[index];
+        return value;
     }
 
-    // Insert at the end of the array
-    push(element: T): void {
-        this.insert(element, this.array.length);
-    }
-
-    // Insert at the beginning of the array
-    unshift(element: T): void {
-        this.insert(element, 0);
-    }
-
-    // Deletion
-    delete(position: number): T {
-        // Deletion before [0] or at/after [length] is forbidden
-        if (position < 0 || position >= this.array.length) {
+    // O(1)
+    update(index: number, value: T): void {
+        if (index < 0 || index >= this.length) {
             throw new RangeError("Index out of bounds");
         }
-        // Get the element to be deleted
-        const element = this.array[position];
-        // Move one position to the left all the elements starting from the position + 1
-        // till the end of the array to delete the element at the position
-        let index = position;
-        while (index < this.array.length - 1) {
-            this.array[index] = this.array[index + 1];
-            ++index;
+        this.array[index] = value;
+    }
+
+    /* Insertion */
+
+    // O(n)
+    insert(value: T, index: number): void {
+        if (index < 0 || index > this.array.length) {
+            throw new RangeError("Index out of bounds");
         }
-        // Decrement the array length
+        let shiftIndex = this.array.length;
+        while (shiftIndex > index) {
+            this.array[shiftIndex] = this.array[shiftIndex - 1];
+            --shiftIndex;
+        }
+        this.array[index] = value;
+    }
+
+    // O(1)
+    push(value: T): void {
+        this.insert(value, this.array.length);
+    }
+
+    // O(n)
+    unshift(value: T): void {
+        this.insert(value, 0);
+    }
+
+    /* Deletion */
+
+    // O(n)
+    delete(index: number): T {
+        if (index < 0 || index >= this.array.length) {
+            throw new RangeError("Index out of bounds");
+        }
+        const deletedValue = this.array[index];
+        let shiftIndex = index;
+        while (shiftIndex < this.array.length - 1) {
+            this.array[shiftIndex] = this.array[shiftIndex + 1];
+            ++shiftIndex;
+        }
         --this.array.length;
-        // Return the deleted element
-        return element;
+        return deletedValue;
     }
 
-    // Delete from the end of the array
+    // O(1)
     pop(): T {
         return this.delete(this.array.length - 1);
     }
 
-    // Delete from the beginning of the array
+    // O(n)
     shift(): T {
         return this.delete(0);
     }
 
-    // Traversal
+    /* Traversal */
+
+    // O(n)
     [Symbol.iterator](): Iterator<T> {
         let index = 0;
-        // Create an Iterator<T> with the next() function
         const next = function() {
             return index < this.array.length
                 ? {value: this.array[index++], done: false}
@@ -100,7 +119,9 @@ export class CArray<T> /* Traversal */ implements Iterable<T> {
         return iterator;
     }
 
-    // Searching
+    /* Searching */
+
+    // O(n)
     search(element: T): number {
         let result = -1;
         for (const [index, value] of this.array.entries()) {
