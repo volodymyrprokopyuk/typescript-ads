@@ -13,7 +13,7 @@ describe("DArray implements a dynamic array", () => {
             expect(darray.values).toEqual([]);
         });
         it("Should create a DArray from an iterable", () => {
-            const array = [1, 2];
+            const array = [10, 20];
             const darray = new DArray(array);
             expect(darray.values).toEqual(array);
         });
@@ -21,8 +21,8 @@ describe("DArray implements a dynamic array", () => {
     describe("DArray.concat(iterable) concatenates the existing DArray with an iterable", () => {
         describe.each([
             [[], [], []],
-            [[1], [2], [1, 2]],
-            [[1, 2], [3, 4], [1, 2, 3, 4]],
+            [[10], [20], [10, 20]],
+            [[10, 20], [30, 40], [10, 20, 30, 40]],
         ])("%p.concat(%p) should be %p", (array, iterable, expectedArray) => {
             it("Should shocatente the existing DArray with an iterable", () => {
                 const darray = new DArray(array);
@@ -37,14 +37,14 @@ describe("DArray implements a dynamic array", () => {
     /* Observation */
     describe("DArray.length returns the length of a DArray", () => {
         it("Should return the length of a DArray", () => {
-            const array = [1, 2];
+            const array = [10, 20];
             const darray = new DArray(array);
             expect(darray.length).toBe(array.length);
         });
     });
     describe("DArray.values returns the underlaying array", () => {
         it("Should return the underlaying array", () => {
-            const array = [1, 2];
+            const array = [10, 20];
             const darray = new DArray(array);
             darray.values.push(3);
             expect(darray.values).toEqual(array);
@@ -52,7 +52,7 @@ describe("DArray implements a dynamic array", () => {
     });
     /* Indexing */
     describe("DArray.at(index) returns a value at index", () => {
-        describe.each([[[], -1], [[], 0], [[1], 1]])(
+        describe.each([[[], -1], [[], 0], [[10], 1]])(
             "%p.at(%p) should throw a RangeError",
             (array, index: any) => {
                 it("Should throw a RangeError when the index is out of the bounds", () => {
@@ -63,7 +63,7 @@ describe("DArray implements a dynamic array", () => {
                 });
             }
         );
-        describe.each([[[1], 0, 1], [[1, 2], 1, 2], [[1, 2, 3], 1, 2]])(
+        describe.each([[[10], 0, 10], [[10, 20], 1, 20], [[10, 20, 30], 1, 20]])(
             "%p.at(%p) should be %p",
             (array, index: any, expectedValue) => {
                 it("Should return a value at an index when the index is within the bounds", () => {
@@ -75,7 +75,7 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     describe("DArray.update(index, value) updates a value at index", () => {
-        describe.each([[[], -1], [[], 0], [[1], 1]])(
+        describe.each([[[], -1], [[], 0], [[10], 1]])(
             "%p.update(%p) should throw a RangeError",
             (array, index: any) => {
                 it("Should throw a RangeError when the index is out of the bounds", () => {
@@ -116,11 +116,11 @@ describe("DArray implements a dynamic array", () => {
         );
         describe.each([
             [[], 10, 0, [10]],
-            [[1], 10, 0, [10, 1]],
-            [[1], 10, 1, [1, 10]],
-            [[1, 2], 10, 0, [10, 1, 2]],
-            [[1, 2], 10, 1, [1, 10, 2]],
-            [[1, 2], 10, 2, [1, 2, 10]],
+            [[10], 20, 0, [20, 10]],
+            [[10], 20, 1, [10, 20]],
+            [[10, 20], 30, 0, [30, 10, 20]],
+            [[10, 20], 30, 1, [10, 30, 20]],
+            [[10, 20], 30, 2, [10, 20, 30]],
         ])(
             "%p.insertAt(%p, %p) should be %p",
             (array: any, value, index: any, expectedArray: any) => {
@@ -134,7 +134,7 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     describe("DArray.push(value) inserts a value at the end of a DArray", () => {
-        describe.each([[[], 10, [10]], [[1], 10, [1, 10]]])(
+        describe.each([[[], 10, [10]], [[10], 20, [10, 20]]])(
             "%p.push(%p) should be %p",
             (array: any, value, expectedArray) => {
                 it("Should insert a value at the end of a DArray", () => {
@@ -146,7 +146,7 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     describe("DArray.unshift(value) inserts a value at the beginning of a DArray", () => {
-        describe.each([[[], 10, [10]], [[1], 10, [10, 1]]])(
+        describe.each([[[], 10, [10]], [[10], 20, [20, 10]]])(
             "%p.unshift(%p) should be %p",
             (array: any, value, expectedArray) => {
                 it("Should insert a value at the beginning of a DArray", () => {
@@ -159,7 +159,7 @@ describe("DArray implements a dynamic array", () => {
     });
     /* Deletion */
     describe("DArray.delete(index) deletes a value at an index", () => {
-        describe.each([[[], -1], [[], 0], [[1], 1]])(
+        describe.each([[[], -1], [[], 0], [[10], 1]])(
             "%p.delete(%p) should throw a RangeError",
             (array: any, index: any) => {
                 it("Should throw a RangeError when the index is out of the bounds", () => {
@@ -171,10 +171,10 @@ describe("DArray implements a dynamic array", () => {
             }
         );
         describe.each([
-            [[1], 0, [], 1],
-            [[1, 2], 0, [2], 1],
-            [[1, 2], 1, [1], 2],
-            [[1, 2, 3], 1, [1, 3], 2],
+            [[10], 0, [], 10],
+            [[10, 20], 0, [20], 10],
+            [[10, 20], 1, [10], 20],
+            [[10, 20, 30], 1, [10, 30], 20],
         ])(
             "%p.delete(%p) should be %p with the deleted value %p",
             (array: any, index: any, expectedArray: any, deletedValue) => {
@@ -189,7 +189,7 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     describe("DArray.pop() deletes the last value from a DArray", () => {
-        describe.each([[[1], [], 1], [[1, 2], [1], 2]])(
+        describe.each([[[10], [], 10], [[10, 20], [10], 20]])(
             "%p.pop() should be %p with the deleted value %p",
             (array: any, expectedArray: any, deletedValue) => {
                 it("Should delete the last value fron a DArray", () => {
@@ -203,7 +203,7 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     describe("DArray.shift() deletes the first value from a DArray", () => {
-        describe.each([[[1], [], 1], [[1, 2], [2], 1]])(
+        describe.each([[[10], [], 10], [[10, 20], [20], 10]])(
             "%p.shift() should be %p with the deleted value %p",
             (array: any, expectedArray: any, deletedValue) => {
                 it("Should delete the first value fron a DArray", () => {
@@ -217,11 +217,11 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     /* Traversal */
-    describe("DArray supports the for/of traversal via a [Symbol.iterator]()", () => {
-        describe.each([[[], []], [[1], [1]], [[1, 2], [1, 2]]])(
+    describe("DArray supports forward traversal in a for/of loop", () => {
+        describe.each([[[], []], [[10], [10]], [[10, 20], [10, 20]]])(
             "for (value of %p) should be %p",
             (array, expectedArray) => {
-                it("Should return the values of a DArray when doing the for/of traversal", () => {
+                it("Should return the values of a DArray in a for/of loop", () => {
                     const darray = new DArray(array);
                     const traversed = [];
                     for (const value of darray) {
@@ -231,6 +231,23 @@ describe("DArray implements a dynamic array", () => {
                 });
             }
         );
+    });
+    describe("DArray.reversed supports backrads traversal in a for/of loop", () => {
+        describe.each([
+            [[], []],
+            [[10], [10]],
+            [[10, 20], [20, 10]],
+            [[10, 20, 30], [30, 20, 10]],
+        ])("for (value of %p.reversed) should be %p", (array, expectedArray) => {
+            it("Should return the value of a DArray in a reversed order in a foor/of loop", () => {
+                const darray = new DArray(array);
+                const reversed = [];
+                for (const value of darray.reversed) {
+                    reversed.push(value);
+                }
+                expect(reversed).toEqual(expectedArray);
+            });
+        });
     });
     /* Searching */
     describe("DArray.search(value) returns the index of the first occurrence of the value or -1", () => {

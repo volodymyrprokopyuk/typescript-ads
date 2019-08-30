@@ -12,11 +12,11 @@ export interface LinkedList<T> extends /* Traversal */ Iterable<T> {
     // Insertion
     pushFront(value: T): LinkedList<T>;
     pushBack(value: T): LinkedList<T>;
-    insert(value: T, index: number): LinkedList<T>;
+    // insert(value: T, index: number): LinkedList<T>;
     // Deletion
     popFront(): T;
     popBack(): T;
-    delete(index: number): T;
+    // delete(index: number): T;
     // Search
     // TODO
 }

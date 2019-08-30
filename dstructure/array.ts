@@ -119,6 +119,23 @@ export class DArray<T> implements Iterable<T> {
         return iterator;
     }
 
+    // O(n)
+    get reversed() {
+        const iterable = {
+            [Symbol.iterator]: () => {
+                let index = this.array.length;
+                const next = () => {
+                    return index > 0
+                        ? {value: this.array[--index], done: false}
+                        : {value: undefined, done: true};
+                };
+                const iterator = {next};
+                return iterator;
+            },
+        };
+        return iterable;
+    }
+
     /* Searching */
 
     // O(n)

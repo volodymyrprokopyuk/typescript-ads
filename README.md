@@ -17,10 +17,10 @@ yarn install
   that are stored in consecutive memory locations and are referenced by an integer
   index. Array provides random access and constant time indexing
 - **Time complexity**
-    - Indexing: O(1)
-    - Insertion: O(n)
-    - Deletion: O(n)
-    - Searching: O(n)
+    - Indexing: O(1) < random access
+    - Insertion: O(n) < resize
+    - Deletion: O(n) < rexize
+    - Searching: O(n) < scan
 - **Characteristics**. Dynamic array automatically realocates memory when needed on
   insertions or deletions. Vector is a one-dimensional array. Matrix is a
   two-dimensional array
@@ -30,9 +30,15 @@ yarn install
 - **Definition**. Linked list is a growing linear collection of elements (nodes) of the
   same data type that point to the next node in a list and are stored in random memory
   locations. Any number of elements can be added to a linked list. Linked list provides
-  sequential access and constant time insertions and deletions at any point in the list
+  sequential access and constant time insertion and deletion at any point in the list
 - **Time complexity**
-- **Characteristics**. Singly linked list is a one-way traversal linked list in which
-  every node points to the next node ina list
+    - Indexing: O(n) < sequential access
+    - Insertion: O(1) < link
+    - Deletion: O(1) < link
+    - Searching: O(n) < scan
+- **Characteristics**. Singly-linked list is a one-way traversal linked list in which
+  every node points to the next node in a list (space-efficient). Doubly=linked list is
+  a bidirectional traversal linked list in which every node points to the previous and
+  the next node in a list (less space-efficient)
 
 ## Algorithms
