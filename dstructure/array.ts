@@ -99,4 +99,16 @@ export class CArray<T> /* Traversal */ implements Iterable<T> {
         const iterator = {next};
         return iterator;
     }
+
+    // Searching
+    search(element: T): number {
+        let result = -1;
+        for (const [index, value] of this.array.entries()) {
+            if (value === element) {
+                result = index;
+                break;
+            }
+        }
+        return result;
+    }
 }

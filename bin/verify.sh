@@ -3,7 +3,7 @@
 set -eux
 
 export PATH=./node_modules/.bin:$PATH
-readonly TARGET=
+readonly TARGET=array
 readonly SOURCE_TARGET=$(ls dstructure/*.ts | grep -v '.test.' | grep "${TARGET}")
 readonly TEST_TARGET=$(ls dstructure/*.test.ts | grep "${TARGET}")
 

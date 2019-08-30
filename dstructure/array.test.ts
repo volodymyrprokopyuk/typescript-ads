@@ -181,4 +181,20 @@ describe("CArray implements the array linear data structure", () => {
             }
         );
     });
+    // Searching
+    describe("CArray.search(element) returns the index of the first occurrence of the element or -1", () => {
+        describe.each([
+            [[], 10, -1],
+            [[10], 10, 0],
+            [[10, 20], 20, 1],
+            [[10, 20, 30], 20, 1],
+            [[10, 20, 30], 40, -1],
+        ])("%p.search(%p) should be %p", (array, element, expectedResult) => {
+            it("Should return the index of the first occurent of the element or -1", () => {
+                const result = new CArray(array);
+                const index = result.search(element);
+                expect(index).toBe(expectedResult);
+            });
+        });
+    });
 });
