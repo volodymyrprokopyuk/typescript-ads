@@ -4,7 +4,7 @@ export class SNode<T> {
 }
 
 // Slingly-linked list
-export class SLinkedList<T> implements Iterable<T> {
+export class SList<T> implements Iterable<T> {
     private head: SNode<T> | null = null;
     private _length: number = 0;
 
@@ -20,8 +20,8 @@ export class SLinkedList<T> implements Iterable<T> {
     }
 
     // O(n)
-    concat(iterable: Iterable<T>): SLinkedList<T> {
-        const newList = new SLinkedList<T>(this.values.reverse());
+    concat(iterable: Iterable<T>): SList<T> {
+        const newList = new SList<T>(this.values.reverse());
         for (const value of iterable) {
             newList.pushFront(value);
         }
@@ -47,7 +47,7 @@ export class SLinkedList<T> implements Iterable<T> {
     /* Insertion */
 
     // O(1)
-    pushFront(value: T): SLinkedList<T> {
+    pushFront(value: T): SList<T> {
         const node = new SNode<T>(value);
         if (this.head !== null) {
             node.next = this.head;
@@ -71,6 +71,8 @@ export class SLinkedList<T> implements Iterable<T> {
     }
 
     /* Traversal */
+
+    // O(n)
     [Symbol.iterator](): Iterator<T> {
         let node = this.head;
         const next = function() {
@@ -86,5 +88,38 @@ export class SLinkedList<T> implements Iterable<T> {
         return iterator;
     }
 
+    // O(n)
+    get entries() {
+        const iterable = {
+            [Symbol.iterator]: () => {
+                let node = this.head;
+                let index = 0;
+                const next = () => {
+                    if (node === null) {
+                        return {value: undefined, done: true};
+                    } else {
+                        const value = {value: [index++, node], done: false};
+                        node = node.next;
+                        return value;
+                    }
+                };
+                const iterator = {next};
+                return iterator;
+            },
+        };
+        return iterable;
+    }
+
     /* Searching */
+    search(value: T): SNode<T> | null {
+        let node = null;
+        const listEntries: any = this.entries;
+        for (const [index, listNode] of listEntries) {
+            if (listNode.value === value) {
+                node = listNode;
+                break;
+            }
+        }
+        return node;
+    }
 }

@@ -222,11 +222,11 @@ describe("DArray implements a dynamic array", () => {
         );
     });
     /* Traversal */
-    describe("DArray supports forward traversal in a for/of loop", () => {
+    describe("DArray supports a forward traversal in a for/of loop", () => {
         describe.each([[[], []], [[10], [10]], [[10, 20], [10, 20]]])(
             "for (const value of %p) should be %p",
             (array, expectedArray) => {
-                it("Should return the values of a DArray in a for/of loop", () => {
+                it("Should perform a forward traversal of values in a for/of loop", () => {
                     const darray = new DArray(array);
                     const traversed = [];
                     for (const value of darray) {
@@ -239,9 +239,9 @@ describe("DArray implements a dynamic array", () => {
     });
     describe("DArray.entries supports an index/value forward traversal in a for/of loop", () => {
         describe.each([[[], []], [[10], [[0, 10]]], [[10, 20], [[0, 10], [1, 20]]]])(
-            "for (const value of %p.entries) should be %p",
+            "for (const [index, value] of %p.entries) should be %p",
             (array, expectedEntries) => {
-                it("Should return an index/value pare in a for/of loop", () => {
+                it("Should perform a forward traversal of index/value pairs in a for/of loop", () => {
                     const darray = new DArray(array);
                     const entries = [];
                     const arrayEntries: any = darray.entries;
@@ -260,7 +260,7 @@ describe("DArray implements a dynamic array", () => {
             [[10, 20], [20, 10]],
             [[10, 20, 30], [30, 20, 10]],
         ])("for (const value of %p.reversed) should be %p", (array, expectedArray) => {
-            it("Should return the value of a DArray in a reversed order in a foor/of loop", () => {
+            it("Should perform a backrads traversal of values in a foor/of loop", () => {
                 const darray = new DArray(array);
                 const reversed = [];
                 for (const value of darray.reversed) {
