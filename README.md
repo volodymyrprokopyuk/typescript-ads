@@ -36,9 +36,9 @@ yarn install
     - Insertion: O(1) < link
     - Deletion: O(1) < link
     - Searching: O(n) < scan
-- **Characteristics**. Singly-linked list is a one-way traversal linked list in which
-  every node points to the next node in a list (space-efficient). Doubly=linked list is
-  a bidirectional traversal linked list in which every node points to the previous and
-  the next node in a list (less space-efficient)
+- **Characteristics**. Singly-linked list is a farward-only traversal linked list in
+  which every node points to the next node in a list (space-efficient). Doubly=linked
+  list is a bidirectional traversal linked list in which every node points to the
+  previous and the next node in a list (less space-efficient)
 
 ## Algorithms

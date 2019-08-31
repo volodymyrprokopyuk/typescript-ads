@@ -120,6 +120,23 @@ export class DArray<T> implements Iterable<T> {
     }
 
     // O(n)
+    get entries() {
+        const iterable = {
+            [Symbol.iterator]: () => {
+                let index = 0;
+                const next = () => {
+                    return index < this.array.length
+                        ? {value: [index, this.array[index++]], done: false}
+                        : {value: undefined, done: true};
+                };
+                const iterator = {next};
+                return iterator;
+            },
+        };
+        return iterable;
+    }
+
+    // O(n)
     get reversed() {
         const iterable = {
             [Symbol.iterator]: () => {
@@ -139,14 +156,15 @@ export class DArray<T> implements Iterable<T> {
     /* Searching */
 
     // O(n)
-    search(element: T): number {
-        let foundIndex = -1;
-        for (const [index, value] of this.array.entries()) {
-            if (value === element) {
-                foundIndex = index;
+    search(value: T): number {
+        let index = -1;
+        const arrayEntries: any = this.entries;
+        for (const [arrayIndex, arrayValue] of arrayEntries) {
+            if (arrayValue === value) {
+                index = arrayIndex;
                 break;
             }
         }
-        return foundIndex;
+        return index;
     }
 }
