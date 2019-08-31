@@ -10,7 +10,9 @@
         "interface-name": false,
         "member-access": false,
         "trailing-comma": false,
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "only-arrow-functions": false,
+        "variable-name": false
     },
     "rulesDirectory": []
 }

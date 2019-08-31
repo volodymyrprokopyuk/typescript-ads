@@ -2,7 +2,7 @@
 export class DArray<T> implements Iterable<T> {
     private array: T[] = [];
 
-    /* Creation */
+    /* Constration */
 
     // O(n)
     constructor(iterable?: any) {
@@ -140,13 +140,13 @@ export class DArray<T> implements Iterable<T> {
 
     // O(n)
     search(element: T): number {
-        let result = -1;
+        let foundIndex = -1;
         for (const [index, value] of this.array.entries()) {
             if (value === element) {
-                result = index;
+                foundIndex = index;
                 break;
             }
         }
-        return result;
+        return foundIndex;
     }
 }

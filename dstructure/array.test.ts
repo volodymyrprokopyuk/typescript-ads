@@ -1,7 +1,7 @@
 import {DArray} from "./array";
 
 describe("DArray implements a dynamic array", () => {
-    /* Creation */
+    /* Construction */
     describe("new DArray(iterable?) creates a DArray from an iterable", () => {
         it("Should throw a TypeError when a non-iterble is provided", () => {
             expect(() => new DArray(0)).toThrow(
@@ -12,11 +12,16 @@ describe("DArray implements a dynamic array", () => {
             const darray = new DArray();
             expect(darray.values).toEqual([]);
         });
-        it("Should create a DArray from an iterable", () => {
-            const array = [10, 20];
-            const darray = new DArray(array);
-            expect(darray.values).toEqual(array);
-        });
+        describe.each([[[], []], [[10], [10]], [[10, 20], [10, 20]]])(
+            "new DArray(%p) should be %p",
+            (array, expectedArray) => {
+                it("Should create a DArray from an iterable", () => {
+                    const darray = new DArray(array);
+                    expect(darray.values).toEqual(expectedArray);
+                    expect(darray.length).toBe(expectedArray.length);
+                });
+            }
+        );
     });
     describe("DArray.concat(iterable) concatenates the existing DArray with an iterable", () => {
         describe.each([
@@ -24,13 +29,13 @@ describe("DArray implements a dynamic array", () => {
             [[10], [20], [10, 20]],
             [[10, 20], [30, 40], [10, 20, 30, 40]],
         ])("%p.concat(%p) should be %p", (array, iterable, expectedArray) => {
-            it("Should shocatente the existing DArray with an iterable", () => {
+            it("Should concatente the existing DArray with an iterable", () => {
                 const darray = new DArray(array);
-                const concatedDArray = darray.concat(iterable);
+                const concatedArray = darray.concat(iterable);
                 expect(darray.values).toEqual(array);
                 expect(darray.length).toEqual(array.length);
-                expect(concatedDArray.values).toEqual(expectedArray);
-                expect(concatedDArray.length).toEqual(expectedArray.length);
+                expect(concatedArray.values).toEqual(expectedArray);
+                expect(concatedArray.length).toEqual(expectedArray.length);
             });
         });
     });
