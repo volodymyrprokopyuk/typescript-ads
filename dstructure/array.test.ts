@@ -51,12 +51,12 @@ describe("DArray implements a dynamic array", () => {
         it("Should return the underlaying array", () => {
             const array = [10, 20];
             const darray = new DArray(array);
-            darray.values.push(3);
+            darray.values.push(30);
             expect(darray.values).toEqual(array);
         });
     });
     /* Indexing */
-    describe("DArray.at(index) returns a value at index", () => {
+    describe("DArray.at(index) returns a value at an index", () => {
         describe.each([[[], -1], [[], 0], [[10], 1]])(
             "%p.at(%p) should throw a RangeError",
             (array, index: any) => {
@@ -81,7 +81,7 @@ describe("DArray implements a dynamic array", () => {
     });
     describe("DArray.update(index, value) updates a value at index", () => {
         describe.each([[[], -1], [[], 0], [[10], 1]])(
-            "%p.update(%p) should throw a RangeError",
+            "%p.update(%p, 10) should throw a RangeError",
             (array, index: any) => {
                 it("Should throw a RangeError when the index is out of the bounds", () => {
                     const darray = new DArray(array);

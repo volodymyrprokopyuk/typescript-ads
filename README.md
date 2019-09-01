@@ -28,9 +28,10 @@ yarn install
 #### Linked list
 
 - **Definition**. Linked list is a growing linear collection of elements (nodes) of the
-  same data type that point to the next node in a list and are stored in random memory
-  locations. Any number of elements can be added to a linked list. Linked list provides
-  sequential access and constant time insertion and deletion at any point in the list
+  same data type that point to the previours/next node in a list and are stored in
+  random memory locations in reverse order. Any number of elements can be added to a
+  linked list at any point. Linked list provides sequential access and constant time
+  insertion and deletion at any point in the list
 - **Time complexity**
     - Indexing: O(n) < sequential access
     - Insertion: O(1) < link

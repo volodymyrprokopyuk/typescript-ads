@@ -44,6 +44,34 @@ export class SList<T> implements Iterable<T> {
 
     /* Indexing */
 
+    // O(n)
+    at(index: number): T {
+        if (index < 0 || index >= this.length || this.head === null) {
+            throw new RangeError("Index out of bounds");
+        }
+        let value = this.head.value;
+        const listEntries: any = this.entries;
+        for (const [listIndex, node] of listEntries) {
+            if (listIndex === index) {
+                value = node.value;
+            }
+        }
+        return value;
+    }
+
+    // O(n)
+    update(index: number, value: T): void {
+        if (index < 0 || index >= this.length || this.head === null) {
+            throw new RangeError("Index out of bounds");
+        }
+        const listEntries: any = this.entries;
+        for (const [listIndex, node] of listEntries) {
+            if (listIndex === index) {
+                node.value = value;
+            }
+        }
+    }
+
     /* Insertion */
 
     // O(1)
@@ -57,6 +85,13 @@ export class SList<T> implements Iterable<T> {
         return this;
     }
 
+    // O(1)
+    insertAfter(node: SNode<T>, value: T): void {
+        const newNode = new SNode(value, node.next);
+        node.next = newNode;
+        ++this._length;
+    }
+
     /* Deletion */
 
     // O(1)
@@ -66,6 +101,17 @@ export class SList<T> implements Iterable<T> {
         }
         const deletedNode = this.head;
         this.head = deletedNode.next;
+        --this._length;
+        return deletedNode.value;
+    }
+
+    // O(1)
+    deleteAfter(node: SNode<T>): T | null {
+        const deletedNode = node.next;
+        if (deletedNode === null) {
+            return deletedNode;
+        }
+        node.next = deletedNode.next;
         --this._length;
         return deletedNode.value;
     }
