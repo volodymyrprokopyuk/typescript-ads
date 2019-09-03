@@ -19,7 +19,7 @@ yarn install
 - **Time complexity**
     - Indexing: O(1) < random access
     - Insertion: O(n) < resize
-    - Deletion: O(n) < rexize
+    - Deletion: O(n) < resize
     - Searching: O(n) < scan
 - **Characteristics**
     - Dynamic array automatically realocates memory when needed on insertions or
