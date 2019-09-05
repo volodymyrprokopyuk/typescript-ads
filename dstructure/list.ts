@@ -3,7 +3,7 @@ export class SNode<T> {
     constructor(public value: T, public next: SNode<T> | null = null) {}
 }
 
-// Slingly-linked list
+// Singly-linked list
 export class SList<T> implements Iterable<T> {
     private head: SNode<T> | null = null;
     private _length: number = 0;
@@ -340,7 +340,7 @@ export class DList<T> implements Iterable<T> {
         }
         if (node.next === null) {
             this.tail = node.prev;
-            if (this.tail != null) {
+            if (this.tail !== null) {
                 this.tail.next = null;
             }
         } else {
