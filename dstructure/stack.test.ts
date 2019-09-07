@@ -1,4 +1,4 @@
-import {AStack, LStack} from "./stack";
+import {AStack, LStack} from "dstructure/stack";
 
 function newAStack(): AStack<number> {
     return new AStack<number>();

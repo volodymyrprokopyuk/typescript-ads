@@ -1,5 +1,5 @@
-import {DArray} from "./array";
-import {SList} from "./list";
+import {DArray} from "dstructure/array";
+import {SList} from "dstructure/list";
 
 export class AStack<T> {
     private darray: DArray<T> = new DArray<T>();

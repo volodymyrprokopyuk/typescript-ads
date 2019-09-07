@@ -1,4 +1,4 @@
-import {SList, DList} from "./list";
+import {SList, DList} from "dstructure/list";
 
 describe("SList implements a singly-lined list", () => {
     /* Construction */

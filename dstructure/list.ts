@@ -44,6 +44,11 @@ export class SList<T> implements Iterable<T> {
         return values;
     }
 
+    // O(n)
+    toString(): string {
+        return `SList([${this.values}])`;
+    }
+
     /* Indexing */
 
     // O(n)
@@ -210,16 +215,23 @@ export class DList<T> implements Iterable<T> {
 
     /* Observation */
 
+    // O(1)
     get length() {
         return this._length;
     }
 
+    // O(n)
     get values() {
         const values = [];
         for (const value of this) {
             values.push(value);
         }
         return values;
+    }
+
+    // O(n)
+    toString(): string {
+        return `DList([${this.values}])`;
     }
 
     /* Indexing */

@@ -1,4 +1,4 @@
-import {DArray} from "./array";
+import {DArray} from "dstructure/array";
 
 describe("DArray implements a dynamic array", () => {
     /* Construction */

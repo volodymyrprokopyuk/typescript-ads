@@ -3,9 +3,10 @@
 set -eux
 
 export PATH=./node_modules/.bin:$PATH
+export NODE_PATH=.
 readonly TARGET=
-readonly SOURCE_TARGET=$(ls dstructure/*.ts | grep -v '.test.' | grep "${TARGET}")
-readonly TEST_TARGET=$(ls dstructure/*.test.ts | grep "${TARGET}")
+readonly SOURCE_TARGET=$(ls dstructure/*.ts algorithm/*.ts | grep -v '.test.' | grep "${TARGET}")
+readonly TEST_TARGET=$(ls dstructure/*.test.ts algorithm/*.test.ts | grep "${TARGET}")
 
 function format {
     local target=${1?ERROR: mandatory target is not provided}
@@ -24,12 +25,7 @@ function validate {
 }
 
 function compile {
-    local target=${1?ERROR: mandatory target is not provided}
-
-    tsc --target es2019 --module commonjs \
-        --incremental --tsBuildInfoFile .tsbuildinfo \
-        --strictNullChecks --noImplicitAny --experimentalDecorators \
-        $target
+    tsc
 }
 
 function verify {
@@ -40,9 +36,8 @@ function verify {
 
 format "${SOURCE_TARGET}"
 validate "${SOURCE_TARGET}"
-compile "${SOURCE_TARGET}"
+compile
 
 format "${TEST_TARGET}"
 validate "${TEST_TARGET}"
-compile "${TEST_TARGET}"
 verify "${TEST_TARGET}"

@@ -34,6 +34,11 @@ export class DArray<T> implements Iterable<T> {
         return this.array.slice();
     }
 
+    // O(1)
+    toString(): string {
+        return `DArray([${this.array}])`;
+    }
+
     /* Indexing */
 
     // O(1)
