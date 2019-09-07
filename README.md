@@ -46,4 +46,16 @@ yarn install
     - Doubly-linked list is a bidirectional traversal linked list in which every node
       points to the previous and the next node in a list (less space-efficient)
 
+#### Stack
+
+- **Definition**. Stack is a sequential collection of elements with constant time push,
+  pop, and peek operaitons at the top of the stack. Stack implements LIFO data structure
+- **Time complexity**
+    - Top indexing: O(1) < peek
+    - Top insertion: O(1) < push
+    - Top deletion: O(1) < pop
+- **Characteristics**
+    - System (call) stack ensures the proper execution order of nested function calls
+    - Stack can be implemented using either array or linked list
+
 ## Algorithms

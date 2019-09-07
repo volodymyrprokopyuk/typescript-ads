@@ -2,7 +2,7 @@
 export class DArray<T> implements Iterable<T> {
     private array: T[] = [];
 
-    /* Constration */
+    /* Construction */
 
     // O(n)
     constructor(iterable?: any) {
@@ -69,13 +69,15 @@ export class DArray<T> implements Iterable<T> {
     }
 
     // O(1)
-    push(value: T): void {
+    push(value: T): DArray<T> {
         this.insert(value, this.array.length);
+        return this;
     }
 
     // O(n)
-    unshift(value: T): void {
+    unshift(value: T): DArray<T> {
         this.insert(value, 0);
+        return this;
     }
 
     /* Deletion */
