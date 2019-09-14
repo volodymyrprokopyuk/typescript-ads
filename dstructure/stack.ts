@@ -1,7 +1,14 @@
 import {DArray} from "dstructure/array";
 import {SList} from "dstructure/list";
 
-export class AStack<T> {
+export interface Stack<T> {
+    readonly length: number;
+    peek(): T;
+    push(value: T): Stack<T>;
+    pop(): T;
+}
+
+export class AStack<T> implements Stack<T> {
     private darray: DArray<T> = new DArray<T>();
 
     /* Observation */
@@ -34,7 +41,7 @@ export class AStack<T> {
     }
 }
 
-export class LStack<T> {
+export class LStack<T> implements Stack<T> {
     private slist: SList<T> = new SList<T>();
 
     /* Observation */

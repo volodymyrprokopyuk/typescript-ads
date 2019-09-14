@@ -1,8 +1,8 @@
-import {AStack, LStack} from "dstructure/stack";
+import {Stack, AStack, LStack} from "dstructure/stack";
 
 // O(n)
 export function reverse<T>(iterable: Iterable<T>): Iterable<T> {
-    const stack = new LStack();
+    const stack: Stack<T> = new LStack<T>();
     for (const value of iterable) {
         stack.push(value);
     }
@@ -26,7 +26,7 @@ export function checkParentheses(
     const openingToClosing = new Map(match.map((ps) => ps.split("")) as any);
     const opening = new Set(openingToClosing.keys());
     const closing = new Set(openingToClosing.values());
-    const stack = new AStack();
+    const stack: Stack<string> = new AStack<string>();
     let index = 0;
     for (const symbol of expression) {
         if (opening.has(symbol)) {
