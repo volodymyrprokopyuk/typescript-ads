@@ -19,8 +19,15 @@ language (boolean, number, string)
 
 ### Linear data structures
 
-**Linear data structures** data elements are stored in a linear order using sequential
-memory locations or links between data elements
+**Linear data structures** data elements of the same data type are stored in a linear
+order using sequential memory locations or links between data elements
+
+**Array** is a collection of related data items of the same data type (homogeneous)
+stored together under a single name that allow indexing [] operation
+
+**Structure** is a collection of related data items of different data types
+(heterogeneous) stored together under a single name that allow referencing (.)
+operation. Structure is a user-defined data type
 
 #### Array
 
@@ -101,6 +108,28 @@ memory locations or links between data elements
 
 **Graph data structures** is a collection of vertices and edges that connect these
 vertices. Graph (any kind of complex relationships) is a generalization of a tree
-(one-parent-many-children relationship)
+(one-parent-many-children relationship**
 
 ## Algorithms
+
+**Algorithm** is a formally defined effective procedure to solve a problem in a finit
+number of steps that can be implemented using a formal language. Algorithms are used to
+manipulate data in data structures
+
+**Big O notation** O(n) (order of magnitude) provides the upper bound (worst case)
+ignoring constant multipliers for time complexity and memory requirements of an
+algorithm for large values of input size n
+
+- Constant time: O(1)
+- Logarithmic time: O(log n)
+- Linear time: O(n)
+- Polinomial time: O(n ** k)
+- Exponential time: O(2 ** n)
+
+Time complexity of a loop
+
+- Linear loop: O(n). for(i = 0; i < 1000; ++i) // add/subtract i
+- Logarithmic loop: O(log n). for (i = 0; i < 1000; i *= 2) // multiply/divide i
+- Linear logarithmic nested loops: O(n log n). for (++i) { for (i *= 2) }
+- Quadratic nested loops: O(n ** 2). for (++i) { for (++j) }
+- Dependent quadratic nested loops: O(n * (n + 1) / 2). for (++i) { for (j < i; ++j) }
