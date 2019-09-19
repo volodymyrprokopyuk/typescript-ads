@@ -48,3 +48,44 @@ export function checkParentheses(
     }
     return -1;
 }
+
+// O(n)
+export function infixToPostfix(
+    infix: string,
+    precedence: any = new Map([["+", 1], ["-", 1], ["*", 2], ["/", 2]])
+): string {
+    if (!(precedence instanceof Map)) {
+        throw new TypeError("Optional recedence must be a Map");
+    }
+    const availableOperators = new Set(precedence.keys());
+    precedence.set("(", Number.MIN_VALUE);
+    const operators: Stack<string> = new LStack<string>();
+    let postfix = "";
+    for (const symbol of infix.split("")) {
+        if (symbol === "(") {
+            operators.push(symbol);
+        } else if (symbol === ")") {
+            let operator = operators.pop();
+            while (operator !== "(") {
+                postfix += operator;
+                operator = operators.pop();
+            }
+        } else if (availableOperators.has(symbol)) {
+            while (
+                operators.length !== 0 &&
+                precedence.get(operators.peek()) >= precedence.get(symbol)
+            ) {
+                const operator = operators.pop();
+                postfix += operator;
+            }
+            operators.push(symbol);
+        } else {
+            postfix += symbol;
+        }
+    }
+    while (operators.length !== 0) {
+        const operator = operators.pop();
+        postfix += operator;
+    }
+    return postfix;
+}

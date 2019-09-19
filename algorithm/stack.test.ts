@@ -1,6 +1,6 @@
 import {DArray} from "dstructure/array";
 import {SList, DList} from "dstructure/list";
-import {reverse, checkParentheses} from "algorithm/linear";
+import {reverse, checkParentheses, infixToPostfix} from "algorithm/stack";
 
 describe("reverse(iterable) returns reversed iterable", () => {
     describe.each([
@@ -71,4 +71,33 @@ describe("checkParentheses(expression) returns the index of invalid parentheses 
             });
         }
     );
+});
+
+describe("infixToPostfix(infix, precedence) converts an infix expression into a postfix expression", () => {
+    it("should throw TypeError when precedence is not a Map", () => {
+        expect(() => infixToPostfix("infix", {"+": 1})).toThrow(
+            new TypeError("Optional recedence must be a Map")
+        );
+    });
+    describe.each([
+        ["a+b", "ab+"],
+        ["a+b+c", "ab+c+"],
+        ["a+b+c+d", "ab+c+d+"],
+        ["a*b+c", "ab*c+"],
+        ["a+b*c", "abc*+"],
+        ["a+b*c+d", "abc*+d+"],
+        ["a+b*c+d*e", "abc*+de*+"],
+        ["a*b+c*d", "ab*cd*+"],
+        ["(a+b)*c", "ab+c*"],
+        ["(a*b+c)+d", "ab*c+d+"],
+        ["a*(b+(c+d))", "abcd++*"],
+        ["(a+b)*(c+d)", "ab+cd+*"],
+        ["(a*b)+(c*d)", "ab*cd*+"],
+        ["a+(((b+c)+d)+e)", "abc+d+e++"],
+    ])("infixtoPostfix(%p) should be %p", (infix, expectedPosfix) => {
+        it("should convert an infix expression into a postfix expression", () => {
+            const postfix = infixToPostfix(infix);
+            expect(postfix).toEqual(expectedPosfix);
+        });
+    });
 });
