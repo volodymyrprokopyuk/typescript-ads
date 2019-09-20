@@ -1,6 +1,11 @@
 import {DArray} from "dstructure/array";
 import {SList, DList} from "dstructure/list";
-import {reverse, checkParentheses, infixToPostfix} from "algorithm/stack";
+import {
+    reverse,
+    checkParentheses,
+    infixToPostfix,
+    evaluatePostfix,
+} from "algorithm/stack";
 
 describe("reverse(iterable) returns reversed iterable", () => {
     describe.each([
@@ -74,7 +79,7 @@ describe("checkParentheses(expression) returns the index of invalid parentheses 
 });
 
 describe("infixToPostfix(infix, precedence) converts an infix expression into a postfix expression", () => {
-    it("should throw TypeError when precedence is not a Map", () => {
+    it("should throw a TypeError when precedence is not a Map", () => {
         expect(() => infixToPostfix("infix", {"+": 1})).toThrow(
             new TypeError("Optional recedence must be a Map")
         );
@@ -98,6 +103,44 @@ describe("infixToPostfix(infix, precedence) converts an infix expression into a 
         it("should convert an infix expression into a postfix expression", () => {
             const postfix = infixToPostfix(infix);
             expect(postfix).toEqual(expectedPosfix);
+        });
+    });
+});
+
+describe("evaluatePostfix(postfix, operators) evaluates a postfix expression of one-digit integers", () => {
+    it("should throw a TypeError when operators is not a Map", () => {
+        expect(() => evaluatePostfix("postfix", {})).toThrow(
+            new TypeError("Optional operators must be a Map")
+        );
+    });
+    describe.each([["a"], ["1+"], ["11"]])(
+        "evaluatePostfix(%p) should throw a TypeError",
+        (invalidInfix: any) => {
+            it("should throw a TypeError on an invalidad expression", () => {
+                expect(() => {
+                    const invalidPostfix = infixToPostfix(invalidInfix);
+                    evaluatePostfix(invalidPostfix);
+                }).toThrow(new TypeError("Invalid expression"));
+            });
+        }
+    );
+    describe.each([
+        ["0", 0],
+        ["1+2", 3],
+        ["1+2*3", 7],
+        ["1*2+3", 5],
+        ["1+2+3+4", 10],
+        ["1*2+3*4", 14],
+        ["(1+2)*3", 9],
+        ["(1+2)*(3+4)", 21],
+        ["(((1-2)-3)-4)*5", -40],
+        ["(1+(2+(3+4)))/5", 2],
+        ["(1+(2+3))*((4+5)-6)", 18],
+    ])("evaluatePostfix(%p) should be %p", (infix: any, expectedValue) => {
+        it("should return a value of a postfix expression", () => {
+            const postfix = infixToPostfix(infix);
+            const value = evaluatePostfix(postfix);
+            expect(value).toEqual(expectedValue);
         });
     });
 });

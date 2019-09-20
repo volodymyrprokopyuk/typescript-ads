@@ -89,3 +89,44 @@ export function infixToPostfix(
     }
     return postfix;
 }
+
+// O(n)
+export function evaluatePostfix(
+    postfix: string,
+    operators: any = new Map([
+        ["+", (a: number, b: number) => a + b],
+        ["-", (a: number, b: number) => a - b],
+        ["*", (a: number, b: number) => a * b],
+        ["/", (a: number, b: number) => a / b],
+    ])
+): number {
+    if (!(operators instanceof Map)) {
+        throw new TypeError("Optional operators must be a Map");
+    }
+    const availableOperators = new Set(operators.keys());
+    const operatorsPattern = Array.from(availableOperators.values()).join("\\");
+    const expressionPattern = RegExp(`^[\\d\\(\\)\\${operatorsPattern}]+$`);
+    if (!expressionPattern.test(postfix)) {
+        throw new TypeError("Invalid expression");
+    }
+    const operands: Stack<number> = new AStack<number>();
+    for (const symbol of postfix.split("")) {
+        if (availableOperators.has(symbol)) {
+            if (operands.length < 2) {
+                throw new TypeError("Invalid expression");
+            }
+            const b = operands.pop();
+            const a = operands.pop();
+            const operatorResult = operators.get(symbol)(a, b);
+            operands.push(operatorResult);
+        } else {
+            const operand = parseInt(symbol, 10);
+            operands.push(operand);
+        }
+    }
+    if (operands.length !== 1) {
+        throw new TypeError("Invalid expression");
+    }
+    const expressionResult = operands.pop();
+    return expressionResult;
+}
