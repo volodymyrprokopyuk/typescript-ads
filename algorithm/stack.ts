@@ -57,12 +57,21 @@ export function infixToPostfix(
     if (!(precedence instanceof Map)) {
         throw new TypeError("Optional recedence must be a Map");
     }
-    const availableOperators = new Set(precedence.keys());
+    const supportedOperators = new Set(precedence.keys());
     precedence.set("(", Number.MIN_VALUE);
     const operators: Stack<string> = new LStack<string>();
     let postfix = "";
     for (const symbol of infix.split("")) {
-        if (symbol === "(") {
+        if (supportedOperators.has(symbol)) {
+            while (
+                operators.length !== 0 &&
+                precedence.get(symbol) <= precedence.get(operators.peek())
+            ) {
+                const operator = operators.pop();
+                postfix += operator;
+            }
+            operators.push(symbol);
+        } else if (symbol === "(") {
             operators.push(symbol);
         } else if (symbol === ")") {
             let operator = operators.pop();
@@ -70,15 +79,6 @@ export function infixToPostfix(
                 postfix += operator;
                 operator = operators.pop();
             }
-        } else if (availableOperators.has(symbol)) {
-            while (
-                operators.length !== 0 &&
-                precedence.get(operators.peek()) >= precedence.get(symbol)
-            ) {
-                const operator = operators.pop();
-                postfix += operator;
-            }
-            operators.push(symbol);
         } else {
             postfix += symbol;
         }
@@ -103,15 +103,15 @@ export function evaluatePostfix(
     if (!(operators instanceof Map)) {
         throw new TypeError("Optional operators must be a Map");
     }
-    const availableOperators = new Set(operators.keys());
-    const operatorsPattern = Array.from(availableOperators.values()).join("\\");
+    const supportedOperators = new Set(operators.keys());
+    const operatorsPattern = Array.from(supportedOperators.values()).join("\\");
     const expressionPattern = RegExp(`^[\\d\\(\\)\\${operatorsPattern}]+$`);
     if (!expressionPattern.test(postfix)) {
         throw new TypeError("Invalid expression");
     }
     const operands: Stack<number> = new AStack<number>();
     for (const symbol of postfix.split("")) {
-        if (availableOperators.has(symbol)) {
+        if (supportedOperators.has(symbol)) {
             if (operands.length < 2) {
                 throw new TypeError("Invalid expression");
             }
@@ -129,4 +129,58 @@ export function evaluatePostfix(
     }
     const expressionResult = operands.pop();
     return expressionResult;
+}
+
+// O(n)
+export function infixToPrefix(
+    infix: string,
+    precedence: any = new Map([["+", 1], ["-", 1], ["*", 2], ["/", 2]])
+): string {
+    if (!(precedence instanceof Map)) {
+        throw new TypeError("Optional recedence must be a Map");
+    }
+    const supportedOperators = new Set(precedence.keys());
+    precedence.set("(", Number.MIN_VALUE);
+    const operands: Stack<string> = new LStack<string>();
+    const operators: Stack<string> = new AStack<string>();
+    const evaluateSubexpression = () => {
+        if (operands.length < 2 || operators.length === 0) {
+            throw new TypeError("Invalid expression");
+        }
+        const b = operands.pop();
+        const a = operands.pop();
+        const operator = operators.pop();
+        const subexpression = `${operator}${a}${b}`;
+        operands.push(subexpression);
+    };
+    for (const symbol of infix.split("")) {
+        if (supportedOperators.has(symbol)) {
+            while (
+                operators.length !== 0 &&
+                precedence.get(symbol) <= precedence.get(operators.peek())
+            ) {
+                evaluateSubexpression();
+            }
+            operators.push(symbol);
+        } else if (symbol === "(") {
+            operators.push(symbol);
+        } else if (symbol === ")") {
+            let operator = operators.peek();
+            while (operator !== "(") {
+                evaluateSubexpression();
+                operator = operators.peek();
+            }
+            operators.pop();
+        } else {
+            operands.push(symbol);
+        }
+    }
+    while (operators.length !== 0) {
+        evaluateSubexpression();
+    }
+    if (operands.length !== 1 || operators.length !== 0) {
+        throw new TypeError("Invalid expression");
+    }
+    const prefix = operands.pop();
+    return prefix;
 }

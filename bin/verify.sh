@@ -4,6 +4,7 @@ set -eux
 
 export PATH=./node_modules/.bin:$PATH
 export NODE_PATH=.
+# readonly TARGET=algorithm/stack
 readonly TARGET=
 readonly SOURCE_TARGET=$(ls dstructure/*.ts algorithm/*.ts | grep -v '.test.' | grep "${TARGET}")
 readonly TEST_TARGET=$(ls dstructure/*.test.ts algorithm/*.test.ts | grep "${TARGET}")

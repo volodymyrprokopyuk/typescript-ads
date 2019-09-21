@@ -5,6 +5,7 @@ import {
     checkParentheses,
     infixToPostfix,
     evaluatePostfix,
+    infixToPrefix,
 } from "algorithm/stack";
 
 describe("reverse(iterable) returns reversed iterable", () => {
@@ -85,6 +86,7 @@ describe("infixToPostfix(infix, precedence) converts an infix expression into a 
         );
     });
     describe.each([
+        ["a", "a"],
         ["a+b", "ab+"],
         ["a+b+c", "ab+c+"],
         ["a+b+c+d", "ab+c+d+"],
@@ -99,6 +101,8 @@ describe("infixToPostfix(infix, precedence) converts an infix expression into a 
         ["(a+b)*(c+d)", "ab+cd+*"],
         ["(a*b)+(c*d)", "ab*cd*+"],
         ["a+(((b+c)+d)+e)", "abc+d+e++"],
+        ["(a+b+c+(d+e+f))", "ab+c+de+f++"],
+        ["((a+b+c)+d+e+f)", "ab+c+d+e+f+"],
     ])("infixtoPostfix(%p) should be %p", (infix, expectedPosfix) => {
         it("should convert an infix expression into a postfix expression", () => {
             const postfix = infixToPostfix(infix);
@@ -116,7 +120,7 @@ describe("evaluatePostfix(postfix, operators) evaluates a postfix expression of 
     describe.each([["a"], ["1+"], ["11"]])(
         "evaluatePostfix(%p) should throw a TypeError",
         (invalidInfix: any) => {
-            it("should throw a TypeError on an invalidad expression", () => {
+            it("should throw a TypeError on an invalid expression", () => {
                 expect(() => {
                     const invalidPostfix = infixToPostfix(invalidInfix);
                     evaluatePostfix(invalidPostfix);
@@ -141,6 +145,48 @@ describe("evaluatePostfix(postfix, operators) evaluates a postfix expression of 
             const postfix = infixToPostfix(infix);
             const value = evaluatePostfix(postfix);
             expect(value).toEqual(expectedValue);
+        });
+    });
+});
+
+describe("infixToPrefix(infix, precedence) converts an infix expression into a prefix expression", () => {
+    it("should throw a TypeError when precedence is not a Map", () => {
+        expect(() => infixToPrefix("infix", {"+": 1})).toThrow(
+            new TypeError("Optional recedence must be a Map")
+        );
+    });
+    describe.each([["1+"], ["11"]])(
+        "infixToPrefix(%p) should throw a TypeError",
+        (invalidInfix) => {
+            it("should throw a TypeError on an invalid expression", () => {
+                expect(() => infixToPrefix(invalidInfix)).toThrow(
+                    new TypeError("Invalid expression")
+                );
+            });
+        }
+    );
+    describe.each([
+        ["a", "a"],
+        ["a+b", "+ab"],
+        ["a+b+c", "++abc"],
+        ["a+b+c+d", "+++abcd"],
+        ["a*b+c", "+*abc"],
+        ["a+b*c", "+a*bc"],
+        ["a+b*c+d", "++a*bcd"],
+        ["a+b*c+d*e", "++a*bc*de"],
+        ["a*b+c*d", "+*ab*cd"],
+        ["(a+b)*c", "*+abc"],
+        ["(a*b+c)+d", "++*abcd"],
+        ["a*(b+(c+d))", "*a+b+cd"],
+        ["(a+b)*(c+d)", "*+ab+cd"],
+        ["(a*b)+(c*d)", "+*ab*cd"],
+        ["a+(((b+c)+d)+e)", "+a+++bcde"],
+        ["(a+b+c+(d+e+f))", "+++abc++def"],
+        ["((a+b+c)+d+e+f)", "+++++abcdef"],
+    ])("infixToPrefix(%p) should be %p", (infix, expectedPrefix) => {
+        it("should convert an infix expression into a prefix expression", () => {
+            const prefix = infixToPrefix(infix);
+            expect(prefix).toEqual(expectedPrefix);
         });
     });
 });
