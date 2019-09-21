@@ -6,9 +6,10 @@ import {
     infixToPostfix,
     evaluatePostfix,
     infixToPrefix,
+    evaluatePrefix,
 } from "algorithm/stack";
 
-describe("reverse(iterable) returns reversed iterable", () => {
+describe("reverse(iterable) returns a reversed array", () => {
     describe.each([
         [[], []],
         [new DArray<number>(), []],
@@ -26,10 +27,10 @@ describe("reverse(iterable) returns reversed iterable", () => {
         [new DArray<number>([10, 20, 30]), [30, 20, 10]],
         [new SList<number>([10, 20, 30].reverse()), [30, 20, 10]],
         [new DList<number>([10, 20, 30]), [30, 20, 10]],
-    ])("reverse(%s) should be %p", (iterable: any, expectedIterable) => {
-        it("Should return reversed iterable", () => {
+    ])("reverse(%s) should be %p", (iterable: any, expectedArray) => {
+        it("Should return a reversed array", () => {
             const reversed = reverse(iterable);
-            expect(reversed).toEqual(expectedIterable);
+            expect(reversed).toEqual(expectedArray);
         });
     });
 });
@@ -111,6 +112,20 @@ describe("infixToPostfix(infix, precedence) converts an infix expression into a 
     });
 });
 
+const evaluatePostfixTestData = [
+    ["0", 0],
+    ["1+2", 3],
+    ["1+2*3", 7],
+    ["1*2+3", 5],
+    ["1+2+3+4", 10],
+    ["1*2+3*4", 14],
+    ["(1+2)*3", 9],
+    ["(1+2)*(3+4)", 21],
+    ["(((1-2)-3)-4)*5", -40],
+    ["(1+(2+(3+4)))/5", 2],
+    ["(1+(2+3))*((4+5)-6)", 18],
+];
+
 describe("evaluatePostfix(postfix, operators) evaluates a postfix expression of one-digit integers", () => {
     it("should throw a TypeError when operators is not a Map", () => {
         expect(() => evaluatePostfix("postfix", {})).toThrow(
@@ -128,25 +143,16 @@ describe("evaluatePostfix(postfix, operators) evaluates a postfix expression of 
             });
         }
     );
-    describe.each([
-        ["0", 0],
-        ["1+2", 3],
-        ["1+2*3", 7],
-        ["1*2+3", 5],
-        ["1+2+3+4", 10],
-        ["1*2+3*4", 14],
-        ["(1+2)*3", 9],
-        ["(1+2)*(3+4)", 21],
-        ["(((1-2)-3)-4)*5", -40],
-        ["(1+(2+(3+4)))/5", 2],
-        ["(1+(2+3))*((4+5)-6)", 18],
-    ])("evaluatePostfix(%p) should be %p", (infix: any, expectedValue) => {
-        it("should return a value of a postfix expression", () => {
-            const postfix = infixToPostfix(infix);
-            const value = evaluatePostfix(postfix);
-            expect(value).toEqual(expectedValue);
-        });
-    });
+    describe.each(evaluatePostfixTestData)(
+        "evaluatePostfix(%p) should be %p",
+        (infix: any, expectedValue) => {
+            it("should return a value of a postfix expression", () => {
+                const postfix = infixToPostfix(infix);
+                const value = evaluatePostfix(postfix);
+                expect(value).toEqual(expectedValue);
+            });
+        }
+    );
 });
 
 describe("infixToPrefix(infix, precedence) converts an infix expression into a prefix expression", () => {
@@ -189,4 +195,17 @@ describe("infixToPrefix(infix, precedence) converts an infix expression into a p
             expect(prefix).toEqual(expectedPrefix);
         });
     });
+});
+
+describe("evaluatePrefix(prefix, operators) evaluates a prefix expression of one-digit integers", () => {
+    describe.each(evaluatePostfixTestData)(
+        "evaluatePrefix(%p) should be %p",
+        (infix: any, expectedValue) => {
+            it("should return a value of a prefix expression", () => {
+                const prefix = infixToPrefix(infix);
+                const value = evaluatePrefix(prefix);
+                expect(value).toEqual(expectedValue);
+            });
+        }
+    );
 });

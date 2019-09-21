@@ -1,7 +1,7 @@
 import {Stack, AStack, LStack} from "dstructure/stack";
 
 // O(n)
-export function reverse<T>(iterable: Iterable<T>): Iterable<T> {
+export function reverse<T>(iterable: Iterable<T>): T[] {
     const stack: Stack<T> = new LStack<T>();
     for (const value of iterable) {
         stack.push(value);
@@ -11,7 +11,8 @@ export function reverse<T>(iterable: Iterable<T>): Iterable<T> {
         const value = stack.pop();
         reversed.push(value);
     }
-    return reversed as Iterable<T>;
+    // return reversed as Iterable<T>;
+    return reversed;
 }
 
 // O(n)
@@ -183,4 +184,19 @@ export function infixToPrefix(
     }
     const prefix = operands.pop();
     return prefix;
+}
+
+// O(n)
+export function evaluatePrefix(
+    prefix: string,
+    operators: any = new Map([
+        ["+", (a: number, b: number) => b + a],
+        ["-", (a: number, b: number) => b - a],
+        ["*", (a: number, b: number) => b * a],
+        ["/", (a: number, b: number) => b / a],
+    ])
+): number {
+    const reversedPrefix = reverse(prefix).join("");
+    const expressionResult = evaluatePostfix(reversedPrefix, operators);
+    return expressionResult;
 }
