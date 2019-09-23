@@ -1,3 +1,8 @@
+// _ Iterative approach (bottom-up)
+// - Recursive approach (top-down, divide and conquer)
+//   clean/concise, but system stack overhead/limitation
+// - Prefer recursion over iteration only if there is no iterative solution
+
 // O(n)
 export function factorial(n: number): number {
     // Non-Tail-Recursive because of a pending operation (multiplication)
@@ -14,12 +19,11 @@ export function factorial(n: number): number {
 // O(log n)
 export function gcd(a: number, b: number): number {
     [a, b] = a >= b ? [a, b] : [b, a];
-    // Direct, linear recursion
+    // Direct, linear recursion - only one recursive call per function
     return a % b === 0 ? b : gcd(b, a % b);
 }
 
-// O(n) - iterative
-// O(2 ** n) - recursive (direct, tree recursion = two recursive calls)
+// O(n)
 function* fibonacciGenerator() {
     let previous = -1;
     let current = 1;
@@ -42,4 +46,23 @@ export function fibonacci(length: number): number[] {
         }
     }
     return fibonacciSequence;
+}
+
+// O(2 ** n)
+export function hanoi(n: number): string[] {
+    // 1 - smallest, n - largest
+    const movements: string[] = [];
+    const move = (m: number, source: string, target: string, spare: string) => {
+        if (m === 1) {
+            const movement = `${source} -> ${target}`;
+            movements.push(movement);
+        } else {
+            // Direct, tree recursion = more than one recursive call per function
+            move(m - 1, source, spare, target);
+            move(1, source, target, spare);
+            move(m - 1, spare, target, source);
+        }
+    };
+    move(n, "A", "C", "B");
+    return movements;
 }

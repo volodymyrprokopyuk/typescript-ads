@@ -1,4 +1,4 @@
-import {factorial, gcd, fibonacci} from "algorithm/recursion";
+import {factorial, gcd, fibonacci, hanoi} from "algorithm/recursion";
 
 describe("factorial(n) returns a factorial of a number", () => {
     describe.each([
@@ -43,5 +43,18 @@ describe("fibonacci(length) generates the Fibonacci sequence of a specified leng
         const expectedFibonacciSequence = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89];
         const fibonacciSequence = fibonacci(12);
         expect(fibonacciSequence).toEqual(expectedFibonacciSequence);
+    });
+});
+
+describe("hanoi(n) builds instruction set of how to solve the tower of Hanoi problem for a specified n", () => {
+    describe.each([
+        [1, "A -> C".split(", ")],
+        [2, "A -> B, A -> C, B -> C".split(", ")],
+        [3, "A -> C, A -> B, C -> B, A -> C, B -> A, B -> C, A -> C".split(", ")],
+    ])("", (n: any, expectedMovements) => {
+        it("should build instruction set of how to solve the tower of Hanoi problem", () => {
+            const movements = hanoi(n);
+            expect(movements).toEqual(expectedMovements);
+        });
     });
 });
