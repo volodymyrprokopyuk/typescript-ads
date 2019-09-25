@@ -81,8 +81,15 @@ operation. Structure is a user-defined data type
 
 - **Definition**. Data elements are inserted at the back of a queue and are deleted from
   the front of a queue. Queue is a FIFO data structure
+- **Time complexity**
+    - Front indexing: O(1) < peek
+    - Back insertion: O(1) < enqueue
+    - Front deletion: O(1) < dequeue
 - **Characteristics**
-    - Queue can be implemented using either an array or a doubly-linked list
+    - Deque allows enqueing/dequeueing on both sides of a queue (push/popBack/Front)
+    - Queue can be implemented using either an array (space-inefficient implementation
+      because of wasted space reserved for already dequeued values, otherwise implement
+      a circular queue) or a doubly-linked list
 
 ### Tree data structures
 
@@ -90,7 +97,7 @@ operation. Structure is a user-defined data type
   the root node, and the remaining nodes partitioned into disjoint sets such that each
   set is a sub-tree of the root
 
-#### Binary search tree (BST****
+#### Binary search tree (BST)
 
 #### AVL tree
 

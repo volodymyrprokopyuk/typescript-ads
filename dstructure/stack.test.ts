@@ -8,13 +8,12 @@ function newLStack(): LStack<number> {
     return new LStack<number>();
 }
 
-// describe.each([["AStack", "DArray", new AStack<number>()]])(
 describe.each([["AStack", "DArray", newAStack], ["LStack", "SList", newLStack]])(
-    "%s implements a stack using an %s",
+    "%s implements a stack (LIFO) using an %s",
     (stackClass, arrayClass, newStack: any) => {
         /* Observation */
         describe(`${stackClass}.length returns the length of an ${stackClass}`, () => {
-            it(`Should return the length of an ${stackClass}`, () => {
+            it(`should return the length of an ${stackClass}`, () => {
                 const stack = newStack();
                 expect(stack.length).toBe(0);
                 stack.push(1);
@@ -29,11 +28,11 @@ describe.each([["AStack", "DArray", newAStack], ["LStack", "SList", newLStack]])
         });
         /* Indexing */
         describe(`${stackClass}.peek() returns a value from the top of an ${stackClass}`, () => {
-            it(`Should throw a RangeError on an empty ${stackClass}`, () => {
+            it(`should throw a RangeError on an empty ${stackClass}`, () => {
                 const stack = newStack();
                 expect(() => stack.peek()).toThrow(/Index out of bounds|Empty list/);
             });
-            it(`Should return a value from the top of an ${stackClass}`, () => {
+            it(`should return a value from the top of an ${stackClass}`, () => {
                 const stack = newStack();
                 const value1 = 1;
                 stack.push(value1);
@@ -50,7 +49,7 @@ describe.each([["AStack", "DArray", newAStack], ["LStack", "SList", newLStack]])
         });
         /* Insertion */
         describe(`${stackClass}.push(value) inserts a value on top of an ${stackClass}`, () => {
-            it(`Should insert a value on top of an ${stackClass}`, () => {
+            it(`should insert a value on top of an ${stackClass}`, () => {
                 const stack = newStack();
                 const value1 = 1;
                 stack.push(value1);
@@ -64,11 +63,11 @@ describe.each([["AStack", "DArray", newAStack], ["LStack", "SList", newLStack]])
         });
         /* Deletion */
         describe(`${stackClass}.pop() deletes a value from the top of an $stackClass`, () => {
-            it(`Should throw a RangeError on an empty ${stackClass}`, () => {
+            it(`should throw a RangeError on an empty ${stackClass}`, () => {
                 const stack = newStack();
                 expect(() => stack.pop()).toThrow(/Index out of bounds|Empty list/);
             });
-            it(`Should delete a value from the top of an $stackClass`, () => {
+            it(`should delete a value from the top of an $stackClass`, () => {
                 const stack = newStack();
                 const value1 = 1;
                 stack.push(value1);

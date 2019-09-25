@@ -341,6 +341,7 @@ describe("DList implements a doubly-linked list", () => {
             [[10, 20], 0, 10],
             [[10, 20], 1, 20],
             [[10, 20, 30], 0, 10],
+            [[10, 20, 30], 1, 20],
             [[10, 20, 30], 2, 30],
         ])("%p.at(%p) should be %p", (list, index: any, expectedValue) => {
             it("Should return a value at an index when the index is within the bounds", () => {

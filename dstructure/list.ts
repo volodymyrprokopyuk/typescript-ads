@@ -57,6 +57,9 @@ export class SList<T> implements Iterable<T> {
             throw new RangeError("Index out of bounds");
         }
         let value = this.head.value;
+        if (index === 0) {
+            return value;
+        }
         const listEntries: any = this.entries;
         for (const [listIndex, node] of listEntries) {
             if (listIndex === index) {
@@ -238,10 +241,22 @@ export class DList<T> implements Iterable<T> {
 
     // O(n)
     at(index: number): T {
-        if (index < 0 || index >= this.length || this.head === null) {
+        if (
+            index < 0 ||
+            index >= this.length ||
+            this.head === null ||
+            this.tail === null
+        ) {
             throw new RangeError("Index out of bounds");
         }
         let value = this.head.value;
+        if (index === 0) {
+            return value;
+        }
+        if (index === this.length - 1) {
+            value = this.tail.value;
+            return value;
+        }
         const listEntries: any = this.entries;
         for (const [listIndex, node] of listEntries) {
             if (listIndex === index) {
