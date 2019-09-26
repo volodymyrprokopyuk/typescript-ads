@@ -79,17 +79,33 @@ operation. Structure is a user-defined data type
 
 #### Queue
 
-- **Definition**. Data elements are inserted at the back of a queue and are deleted from
-  the front of a queue. Queue is a FIFO data structure
+- **Definition**. Queue is an ordered colleciton that implements FIFO where data
+  elements are inserted at the back of a queue and are deleted from the front of a queue
+  in constant time
 - **Time complexity**
     - Front indexing: O(1) < peek
-    - Back insertion: O(1) < enqueue
+    - Back insertion: O(1) < enqueue, link
     - Front deletion: O(1) < dequeue
 - **Characteristics**
-    - Deque allows enqueing/dequeueing on both sides of a queue (push/popBack/Front)
-    - Queue can be implemented using either an array (space-inefficient implementation
-      because of wasted space reserved for already dequeued values, otherwise implement
-      a circular queue) or a doubly-linked list
+    - **Deque** allows enqueing/dequeueing on both sides of a queue (push/popBack/Front)
+    - Queues are used in pipes when received data rate is higher that sent data rate
+    - Queue can be implemented using either a doubly-linked list or an array
+      (space-inefficient implementation because of wasted space reserved for already
+      dequeued elements, otherwise implement a circular queue)
+
+#### Priority queue
+
+- **Definition**. Each element has data and is assigned a priority. An element with
+  higher priority is processed before an element with lower priority. Two elements with
+  the same priority are processed on FIFO basis
+- **Time complexity**
+    - Front indexing: O(1) < peek
+    - Back insertion: O(log n) < enqueue, heapify
+    - Front deletion: O(1) < dequeue
+- **Characteristics**
+    - Priority queues are widely used in operating systems for scheduling processes
+    - Priority queue can be implemented using heap or using a sorted array + sort on
+      enqueueing or using an unsorted array + search on dequeueing
 
 ### Tree data structures
 
